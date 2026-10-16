@@ -48,9 +48,9 @@ D.querySelectorAll('.projc').forEach(sc=>{const tr=sc.querySelector('.pj-track')
   if(Date.now()-T1<4000){say('Even geduld: neem rustig de tijd om het formulier in te vullen.');return}
   if(sentPA>=2){say('Uw aanvraag is al verstuurd. Dank u.');return}
   const n=(d.get('Naam')||'').trim(),em=(d.get('E-mail')||'').trim(),mo=(d.get('Motivatie')||'').trim();
-  if(n.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)||!d.get('Profiel')||mo.length<10||!d.get('Privacy')){say('Vul uw naam, een geldig e-mailadres, uw profiel en een korte motivatie (minstens 10 tekens) in, en vink het privacyakkoord aan.');return}
+  if(n.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)||!d.get('Profiel')||mo.length<10||d.get('Voorwaarden')!=='Ja'){say('Vul uw naam, een geldig e-mailadres, uw profiel en een korte motivatie (minstens 10 tekens) in, en aanvaard de voorwaarden.');return}
   if((mo.match(/https?:\/\//g)||[]).length>2){say('Uw motivatie bevat te veel links.');return}
-  d.delete('_honey');d.set('_subject','Private Access aanvraag — '+n);d.set('_replyto',em);const b=f.querySelector('button');b.disabled=true;say('Bezig met versturen…');
+  d.delete('_honey');d.delete('Voorwaarden');d.set('Voorwaarden aanvaard','Ja — versie 1.0');d.set('Tijdstempel aanvaarding',new Date().toISOString());d.set('_subject','Private Access aanvraag — '+n);d.set('_replyto',em);const b=f.querySelector('button');b.disabled=true;say('Bezig met versturen…');
   try{const r=await fetch('https://formsubmit.co/ajax/info@black-oak.be',{method:'POST',headers:{Accept:'application/json'},body:d});const j=await r.json().catch(()=>({}));
    if(r.ok&&String(j.success)!=='false'){sentPA++;f.reset();f.style.display="none";m.querySelector(".pa-int").style.display="none";done.hidden=false}else say('Versturen lukte niet. Mail ons gerust: info@black-oak.be')}
   catch(_){say('Versturen lukte niet. Mail ons gerust: info@black-oak.be')}b.disabled=false}});

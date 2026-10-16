@@ -345,3 +345,10 @@ body[data-page=residential] .row{min-height:0}body[data-page=residential] .row .
 .pa-done h3{font-size:30px;margin:10px 0}
 @media(max-width:900px){.pj-head{flex-direction:column;align-items:flex-start}.pa-g{grid-template-columns:1fr}.pc-more{opacity:.9;transform:none}}
 #paf{display:block}
+
+/* v9 */
+.vw{padding-top:clamp(130px,14vw,180px)}.vw-in{max-width:780px}.vw h1{font-size:clamp(34px,4vw,56px);margin-bottom:40px}
+.vw-a{display:grid;grid-template-columns:48px 1fr;gap:10px;padding:26px 0;border-top:1px solid rgba(30,42,59,.12)}.vw-n{font:400 22px var(--serif);color:var(--blue)}
+.vw-a h2{font-size:22px;margin-bottom:8px}.vw-a p{max-width:68ch;opacity:.88}.vw-v{margin-top:30px;color:var(--mute)}
+.pa-sum{border:1px solid rgba(30,42,59,.15);border-radius:3px;padding:12px 16px;font-size:13px}.pa-sum summary{cursor:pointer;font-size:10px}.pa-sum ul{margin:12px 0 8px 18px;display:grid;gap:6px;opacity:.85}.pa-sum a,.pa-ok a{color:var(--blue);text-decoration:underline}
+.intro-home{padding-block:clamp(60px,7vw,100px) 0}.ih{max-width:900px}.ih-t{font:400 clamp(20px,1.9vw,27px)/1.5 var(--serif);color:var(--navy)}
