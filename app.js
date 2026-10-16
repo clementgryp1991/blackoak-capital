@@ -1,4 +1,5 @@
 (()=>{
+if('scrollRestoration' in history)history.scrollRestoration='manual';if(!location.hash)window.scrollTo(0,0);
 const D=document,H=D.documentElement,page=D.body.dataset.page||'home';
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const NAV=[['residential.html','Residential','residential'],['commercial.html','Commercial','commercial'],['over.html','Over Blackoak','over'],['contact.html','Contact','contact']];
@@ -12,13 +13,14 @@ D.getElementById('hdr').innerHTML=`<header class="nav ${D.body.dataset.dark?'dar
 D.getElementById('ftr').outerHTML=`<footer><div class="top"><a href="index.html" class="logo caps">${logo}</a><div class="fl">${NAV.map(n=>`<a class="ul" href="${n[0]}">${n[1]}</a>`).join('')}<a class="ul" href="contact.html">Private access</a></div><p class="lbl meta">Real estate.<br>Long term value.</p><p class="lbl meta">België<br>Est. 2015</p></div><div class="big">Blackoak</div><div class="bot"><span>© 2026 Blackoak Capital · Est. 2015 · België</span><span>Vastgoed. Voor generaties.</span></div></footer>`;
 const nav=D.querySelector('.nav');
 D.querySelector('.burger').onclick=()=>D.body.classList.toggle('menu-open');
-const onS=()=>nav.classList.toggle('scrolled',scrollY>40);addEventListener('scroll',onS,{passive:true});onS();
+const onS=()=>nav.classList.toggle('scrolled',scrollY>60);addEventListener('scroll',onS,{passive:true});onS();
 // form
 const f=D.querySelector('form');if(f)f.onsubmit=e=>{e.preventDefault();const t=D.querySelector('.toast');t.classList.add('on');f.reset();setTimeout(()=>t.classList.remove('on'),3800)};
 if(!window.gsap||RM){H.classList.remove('js');D.querySelector('.pre')?.remove();return}
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);ScrollTrigger.clearScrollMemory&&ScrollTrigger.clearScrollMemory('manual');
 // lenis
 let lenis;if(window.Lenis){lenis=new Lenis({lerp:.09});lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0)}
+const top0=()=>{if(location.hash)return;if(lenis)lenis.scrollTo(0,{immediate:true,force:true});window.scrollTo(0,0);onS()};top0();addEventListener('load',()=>{top0();setTimeout(top0,50)});addEventListener('beforeunload',()=>window.scrollTo(0,0));
 // split headings into masked lines (per word)
 D.querySelectorAll('[data-split]').forEach(el=>{el.innerHTML=el.innerHTML.split('<br>').map(l=>`<span class="line-m">${l.trim().split(' ').map(w=>`<span>${w}</span>`).join(' ')}</span>`).join('')});
 const intro=()=>{
@@ -39,11 +41,11 @@ const intro=()=>{
 // preloader (once per session)
 const pre=D.querySelector('.pre');
 if(pre&&!sessionStorage.bo){sessionStorage.bo=1;const c={v:0},cnt=pre.querySelector('.cnt');
- gsap.timeline({onComplete:()=>{pre.remove();intro()}})
+ gsap.timeline({onComplete:()=>{pre.remove();top0();intro();ScrollTrigger.refresh()}})
  .to(pre.querySelectorAll('.logo span'),{y:0,duration:1,ease:'expo.out',stagger:.1})
  .to(c,{v:100,duration:1.2,ease:'power2.inOut',onUpdate:()=>{cnt.textContent=String(Math.round(c.v)).padStart(3,'0');pre.querySelector('.bar').style.width=c.v+'%'}},0)
  .to(pre,{yPercent:-100,duration:.9,ease:'expo.inOut'},'+=.15');
-}else{pre?.remove();const cu=D.querySelector('.curtain');gsap.set(cu,{yPercent:0,visibility:'visible'});gsap.to(cu,{yPercent:-100,duration:.9,ease:'expo.inOut',onStart:intro,onComplete:()=>gsap.set(cu,{yPercent:100,visibility:'hidden'})})}
+}else{pre?.remove();const cu=D.querySelector('.curtain');gsap.set(cu,{yPercent:0,visibility:'visible'});gsap.to(cu,{yPercent:-100,duration:.9,ease:'expo.inOut',onStart:()=>{top0();intro()},onComplete:()=>gsap.set(cu,{yPercent:100,visibility:'hidden'})})}
 H.classList.remove('js');D.querySelectorAll('.rv').forEach(e=>gsap.set(e,{opacity:0,y:40}));
 // page transitions
 D.querySelectorAll('a[href$=".html"]').forEach(a=>a.addEventListener('click',e=>{if(e.metaKey||e.ctrlKey)return;e.preventDefault();D.body.classList.remove('menu-open');const cu=D.querySelector('.curtain');gsap.fromTo(cu,{yPercent:100,visibility:'visible'},{yPercent:0,duration:.7,ease:'expo.inOut',onComplete:()=>location.href=a.getAttribute('href')})}));
