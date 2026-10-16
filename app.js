@@ -10,7 +10,7 @@ D.getElementById('hdr').innerHTML=`<header class="nav ${D.body.dataset.dark?'dar
 <button class="burger" aria-label="Menu"><i></i><i></i></button></header>
 <div class="overlay"><a class="big" href="index.html">Home</a>${NAV.map(n=>`<a class="big" href="${n[0]}">${n[1]}</a>`).join('')}<p class="lbl">Private access → &nbsp; · &nbsp; NL / FR / EN</p></div>
 <div class="curtain"></div><div class="cur"></div><div class="ring"><b>BEKIJK</b></div><div class="toast">Bedankt. We nemen snel contact met je op.</div>`;
-D.getElementById('ftr').outerHTML=`<footer><div class="top"><a href="index.html" class="logo caps">${logo}</a><div class="fl">${NAV.map(n=>`<a class="ul" href="${n[0]}">${n[1]}</a>`).join('')}<a class="ul" href="contact.html">Private access</a></div><p class="lbl meta">Real estate.<br>Long term value.</p><p class="lbl meta">Sparrendreef 120 bus 21<br>8300 Knokke-Heist<br><a class="ul" href="mailto:clement.gryp@black-oak.be">clement.gryp@black-oak.be</a></p></div><div class="big">Blackoak</div><div class="bot"><span>© 2026 Black Oak Capital BV · BTW BE 0730.923.011 · Est. 2019</span><span>Vastgoed. Voor generaties.</span></div></footer>`;
+D.getElementById('ftr').outerHTML=`<footer><div class="top"><a href="index.html" class="logo caps">${logo}</a><div class="fl">${NAV.map(n=>`<a class="ul" href="${n[0]}">${n[1]}</a>`).join('')}<a class="ul" href="contact.html">Private access</a></div><p class="lbl meta">Real estate.<br>Long term value.</p><p class="lbl meta">Sparrendreef 120 bus 21<br>8300 Knokke-Heist<br><a class="ul" href="mailto:info@black-oak.be">info@black-oak.be</a></p></div><div class="big">Blackoak</div><div class="bot"><span>© 2026 Black Oak Capital BV · BTW BE 0730.923.011 · Est. 2019</span><span>Vastgoed. Voor generaties.</span></div></footer>`;
 const nav=D.querySelector('.nav');
 D.querySelector('.burger').onclick=()=>D.body.classList.toggle('menu-open');
 const onS=()=>nav.classList.toggle('scrolled',scrollY>60);addEventListener('scroll',onS,{passive:true});onS();
@@ -23,10 +23,37 @@ const f=D.getElementById('cf');if(f){const T0=Date.now(),msg=D.getElementById('c
  if(n.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)||m.length<10){say('Vul je naam, een geldig e-mailadres en een bericht (minstens 10 tekens) in.');return}
  if((m.match(/https?:\/\//g)||[]).length>2){say('Je bericht bevat te veel links.');return}
  d.delete('_ts');d.delete('_honey');const b=f.querySelector('button');b.disabled=true;say('Bezig met versturen…');
- try{const r=await fetch('https://formsubmit.co/ajax/clement.gryp@black-oak.be',{method:'POST',headers:{Accept:'application/json'},body:d});const j=await r.json().catch(()=>({}));
-  if(r.ok&&String(j.success)!=='false'){sent++;f.reset();say('');const t=D.querySelector('.toast');t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3800)}else say('Versturen lukte niet. Mail ons gerust rechtstreeks: clement.gryp@black-oak.be')}
- catch(_){say('Versturen lukte niet. Mail ons gerust rechtstreeks: clement.gryp@black-oak.be')}b.disabled=false}};
+ try{const r=await fetch('https://formsubmit.co/ajax/info@black-oak.be',{method:'POST',headers:{Accept:'application/json'},body:d});const j=await r.json().catch(()=>({}));
+  if(r.ok&&String(j.success)!=='false'){sent++;f.reset();say('');const t=D.querySelector('.toast');t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3800)}else say('Versturen lukte niet. Mail ons gerust rechtstreeks: info@black-oak.be')}
+ catch(_){say('Versturen lukte niet. Mail ons gerust rechtstreeks: info@black-oak.be')}b.disabled=false}};
 
+// ontwikkelingen carousel + private access
+D.querySelectorAll('.projc').forEach(sc=>{const tr=sc.querySelector('.pj-track'),cs=[...tr.querySelectorAll('.pc')],cnt=sc.querySelector('.pj-cnt b'),pv=sc.querySelector('.prev'),nx=sc.querySelector('.next');
+ const idx=()=>{let b=0,bd=1e9;cs.forEach((c,i)=>{const d=Math.abs(c.offsetLeft-tr.offsetLeft-tr.scrollLeft-parseFloat(getComputedStyle(tr).paddingLeft));if(d<bd){bd=d;b=i}});return b};
+ const upd=()=>{const i=idx();cnt.textContent=String(i+1).padStart(2,'0');pv.disabled=tr.scrollLeft<4;nx.disabled=tr.scrollLeft+tr.clientWidth>=tr.scrollWidth-4};
+ const go=d=>{const i=Math.max(0,Math.min(cs.length-1,idx()+d));tr.scrollTo({left:cs[i].offsetLeft-cs[0].offsetLeft,behavior:'smooth'})};
+ pv.onclick=()=>go(-1);nx.onclick=()=>go(1);tr.addEventListener('scroll',upd,{passive:true});upd();
+ tr.addEventListener('keydown',e=>{if(e.key=='ArrowRight')go(1);if(e.key=='ArrowLeft')go(-1)});
+ let down=false,sx=0,sl=0,moved=0;tr.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;down=true;moved=0;sx=e.clientX;sl=tr.scrollLeft});
+ addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-sx;if(Math.abs(dx)>4){moved=1;tr.classList.add('drag')}tr.scrollLeft=sl-dx});
+ addEventListener('pointerup',()=>{if(!down)return;down=false;if(tr.classList.contains('drag')){tr.classList.remove('drag');go(0)}});
+ tr.addEventListener('wheel',e=>{if(Math.abs(e.deltaX)>Math.abs(e.deltaY))e.stopPropagation()},{passive:true});tr.setAttribute('data-lenis-prevent-horizontal','');
+ const m=D.querySelector('.pa-m'),f=D.getElementById('paf'),msg=m.querySelector('.pa-msg'),done=m.querySelector('.pa-done');let T1=0,sentPA=0,last=null;
+ const open=p=>{last=D.activeElement;m.hidden=false;m.querySelector('.pa-proj').textContent='Private Access · '+p;f.elements['Project'].value=p;f.style.display="";m.querySelector(".pa-int").style.display="";done.hidden=true;msg.textContent='';T1=Date.now();try{lenis&&lenis.stop()}catch(_){};D.body.style.overflow='hidden';setTimeout(()=>f.elements['Naam'].focus(),60)};
+ const close=()=>{m.hidden=true;D.body.style.overflow='';try{lenis&&lenis.start()}catch(_){};last&&last.focus()};
+ cs.forEach(c=>c.addEventListener('click',e=>{if(moved){e.preventDefault();moved=0;return}open(c.dataset.p)}));
+ m.querySelector('.pa-x').onclick=close;m.querySelector('.pa-bg').onclick=close;addEventListener('keydown',e=>{if(e.key=='Escape'&&!m.hidden)close()});
+ f.onsubmit=async e=>{e.preventDefault();const d=new FormData(f);const say=t=>msg.textContent=t;
+  if((d.get('_honey')||'').length){say('');return}
+  if(Date.now()-T1<4000){say('Even geduld: neem rustig de tijd om het formulier in te vullen.');return}
+  if(sentPA>=2){say('Uw aanvraag is al verstuurd. Dank u.');return}
+  const n=(d.get('Naam')||'').trim(),em=(d.get('E-mail')||'').trim(),mo=(d.get('Motivatie')||'').trim();
+  if(n.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)||!d.get('Profiel')||mo.length<10||!d.get('Privacy')){say('Vul uw naam, een geldig e-mailadres, uw profiel en een korte motivatie (minstens 10 tekens) in, en vink het privacyakkoord aan.');return}
+  if((mo.match(/https?:\/\//g)||[]).length>2){say('Uw motivatie bevat te veel links.');return}
+  d.delete('_honey');d.set('_subject','Private Access aanvraag — '+n);d.set('_replyto',em);const b=f.querySelector('button');b.disabled=true;say('Bezig met versturen…');
+  try{const r=await fetch('https://formsubmit.co/ajax/info@black-oak.be',{method:'POST',headers:{Accept:'application/json'},body:d});const j=await r.json().catch(()=>({}));
+   if(r.ok&&String(j.success)!=='false'){sentPA++;f.reset();f.style.display="none";m.querySelector(".pa-int").style.display="none";done.hidden=false}else say('Versturen lukte niet. Mail ons gerust: info@black-oak.be')}
+  catch(_){say('Versturen lukte niet. Mail ons gerust: info@black-oak.be')}b.disabled=false}});
 // signature finish
 D.querySelectorAll('.sf').forEach(sf=>{const z=sf.querySelector('.sf-zoom'),nm=sf.querySelector('.sf-name'),lp=sf.querySelector('.sf-loupe');const set=(m,n)=>{z.style.backgroundImage=`url(img/new/stalen/${m}.jpg)`;nm.textContent=n;sf.querySelectorAll('[data-m]').forEach(e=>e.classList.toggle('on',e.dataset.m==m))};
  sf.querySelectorAll('[data-m]').forEach(e=>{e.addEventListener('mouseenter',()=>set(e.dataset.m,e.dataset.n));e.addEventListener('click',()=>set(e.dataset.m,e.dataset.n))});
