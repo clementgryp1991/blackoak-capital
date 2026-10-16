@@ -182,3 +182,10 @@ body[data-page=commercial]{--acc:var(--cnavy)}
 .duo .card .more{bottom:84px}
 .chip{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:10px;vertical-align:middle}
 .nav .logo small{font-size:8px;margin-top:6px}@media(max-width:900px){.split{padding-top:80px}}
+
+body[data-page=residential] .nav .logo,body[data-page=commercial] .nav .logo{color:var(--acc)}
+.brands{padding:44px 0}.brands .track{gap:110px;align-items:center}
+.brands img{height:46px;width:auto;object-fit:contain;filter:grayscale(1) opacity(.62);transition:filter .5s}
+.brands img.b-burger-king{height:70px}.brands img.b-colruyt{height:50px}.brands img.b-orchestra{height:40px}.brands img.b-zeeman{height:32px}
+.brands img:hover{filter:none}
+@media(max-width:900px){.brands .track{gap:60px}.brands img{height:32px}.brands img.b-burger-king{height:50px}.brands img.b-orchestra{height:28px}.brands img.b-colruyt{height:36px}.brands img.b-zeeman{height:22px}}
