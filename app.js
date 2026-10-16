@@ -10,12 +10,22 @@ D.getElementById('hdr').innerHTML=`<header class="nav ${D.body.dataset.dark?'dar
 <button class="burger" aria-label="Menu"><i></i><i></i></button></header>
 <div class="overlay"><a class="big" href="index.html">Home</a>${NAV.map(n=>`<a class="big" href="${n[0]}">${n[1]}</a>`).join('')}<p class="lbl">Private access → &nbsp; · &nbsp; NL / FR / EN</p></div>
 <div class="curtain"></div><div class="cur"></div><div class="ring"><b>BEKIJK</b></div><div class="toast">Bedankt. We nemen snel contact met je op.</div>`;
-D.getElementById('ftr').outerHTML=`<footer><div class="top"><a href="index.html" class="logo caps">${logo}</a><div class="fl">${NAV.map(n=>`<a class="ul" href="${n[0]}">${n[1]}</a>`).join('')}<a class="ul" href="contact.html">Private access</a></div><p class="lbl meta">Real estate.<br>Long term value.</p><p class="lbl meta">België<br>Est. 2019</p></div><div class="big">Blackoak</div><div class="bot"><span>© 2026 Blackoak Capital · Est. 2019 · België</span><span>Vastgoed. Voor generaties.</span></div></footer>`;
+D.getElementById('ftr').outerHTML=`<footer><div class="top"><a href="index.html" class="logo caps">${logo}</a><div class="fl">${NAV.map(n=>`<a class="ul" href="${n[0]}">${n[1]}</a>`).join('')}<a class="ul" href="contact.html">Private access</a></div><p class="lbl meta">Real estate.<br>Long term value.</p><p class="lbl meta">Sparrendreef 120 bus 21<br>8300 Knokke-Heist<br><a class="ul" href="mailto:clement.gryp@black-oak.be">clement.gryp@black-oak.be</a></p></div><div class="big">Blackoak</div><div class="bot"><span>© 2026 Black Oak Capital BV · BTW BE 0730.923.011 · Est. 2019</span><span>Vastgoed. Voor generaties.</span></div></footer>`;
 const nav=D.querySelector('.nav');
 D.querySelector('.burger').onclick=()=>D.body.classList.toggle('menu-open');
 const onS=()=>nav.classList.toggle('scrolled',scrollY>60);addEventListener('scroll',onS,{passive:true});onS();
 // form
-const f=D.querySelector('form');if(f)f.onsubmit=e=>{e.preventDefault();const t=D.querySelector('.toast');t.classList.add('on');f.reset();setTimeout(()=>t.classList.remove('on'),3800)};
+const f=D.getElementById('cf');if(f){const T0=Date.now(),msg=D.getElementById('cf-msg');let sent=0;D.getElementById('ts').value=T0;f.onsubmit=async e=>{e.preventDefault();const say=x=>{msg.textContent=x};const d=new FormData(f);
+ if(d.get('_honey')){f.reset();return}
+ if(Date.now()-T0<4000){say('Even geduld: neem rustig de tijd om het formulier in te vullen.');return}
+ if(sent>=2){say('Je bericht is al verstuurd. Dank je.');return}
+ const n=(d.get('Naam')||'').trim(),em=(d.get('E-mail')||'').trim(),m=(d.get('Bericht')||'').trim();
+ if(n.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)||m.length<10){say('Vul je naam, een geldig e-mailadres en een bericht (minstens 10 tekens) in.');return}
+ if((m.match(/https?:\/\//g)||[]).length>2){say('Je bericht bevat te veel links.');return}
+ d.delete('_ts');d.delete('_honey');const b=f.querySelector('button');b.disabled=true;say('Bezig met versturen…');
+ try{const r=await fetch('https://formsubmit.co/ajax/clement.gryp@black-oak.be',{method:'POST',headers:{Accept:'application/json'},body:d});const j=await r.json().catch(()=>({}));
+  if(r.ok&&String(j.success)!=='false'){sent++;f.reset();say('');const t=D.querySelector('.toast');t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3800)}else say('Versturen lukte niet. Mail ons gerust rechtstreeks: clement.gryp@black-oak.be')}
+ catch(_){say('Versturen lukte niet. Mail ons gerust rechtstreeks: clement.gryp@black-oak.be')}b.disabled=false}};
 
 // signature finish
 D.querySelectorAll('.sf').forEach(sf=>{const z=sf.querySelector('.sf-zoom'),nm=sf.querySelector('.sf-name'),lp=sf.querySelector('.sf-loupe');const set=(m,n)=>{z.style.backgroundImage=`url(img/mat/${m}.jpg)`;nm.textContent=n;sf.querySelector('.sf-bg').style.backgroundImage=`url(img/mat/${m}.jpg)`;sf.querySelectorAll('[data-m]').forEach(e=>e.classList.toggle('on',e.dataset.m==m))};
