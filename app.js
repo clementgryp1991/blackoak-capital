@@ -1,31 +1,42 @@
 (()=>{
 if('scrollRestoration' in history)history.scrollRestoration='manual';if(!location.hash)window.scrollTo(0,0);
 const D=document,H=D.documentElement,page=D.body.dataset.page||'home';
+const LG=(H.lang||'nl').slice(0,2),RT=LG=='nl'?'':'../';
+const I={nl:{over:'Over Blackoak',home:'Home',view:'BEKIJK',thanks:'Bedankt. We nemen snel contact met je op.',tag:'Vastgoed. Voor generaties.',
+ wait:'Even geduld: neem rustig de tijd om het formulier in te vullen.',sent:'Je bericht is al verstuurd. Dank je.',req:'Vul je naam, een geldig e-mailadres en een bericht (minstens 10 tekens) in.',links:'Je bericht bevat te veel links.',busy:'Bezig met versturen…',fail:'Versturen lukte niet. Mail ons gerust rechtstreeks: info@black-oak.be',
+ pasent:'Uw aanvraag is al verstuurd. Dank u.',pareq:'Vul uw naam, een geldig e-mailadres, uw profiel en een korte motivatie (minstens 10 tekens) in, en aanvaard de voorwaarden.',palinks:'Uw motivatie bevat te veel links.',pafail:'Versturen lukte niet. Mail ons gerust: info@black-oak.be',pasubj:'Private Access aanvraag — ',home_aria:'Blackoak Capital home'},
+fr:{over:'À propos',home:'Accueil',view:'VOIR',thanks:'Merci. Nous vous recontacterons rapidement.',tag:'L’immobilier. Pour des générations.',
+ wait:'Un instant : prenez le temps de compléter le formulaire.',sent:'Votre message a déjà été envoyé. Merci.',req:'Veuillez indiquer votre nom, une adresse e-mail valide et un message (au moins 10 caractères).',links:'Votre message contient trop de liens.',busy:'Envoi en cours…',fail:'L’envoi a échoué. Écrivez-nous directement : info@black-oak.be',
+ pasent:'Votre demande a déjà été envoyée. Merci.',pareq:'Veuillez indiquer votre nom, une adresse e-mail valide, votre profil et une courte motivation (au moins 10 caractères), et accepter les conditions.',palinks:'Votre motivation contient trop de liens.',pafail:'L’envoi a échoué. Écrivez-nous : info@black-oak.be',pasubj:'Demande Private Access (FR) — ',home_aria:'Blackoak Capital accueil'},
+en:{over:'About',home:'Home',view:'VIEW',thanks:'Thank you. We will be in touch shortly.',tag:'Real estate. For generations.',
+ wait:'One moment: please take your time to complete the form.',sent:'Your message has already been sent. Thank you.',req:'Please enter your name, a valid email address and a message (at least 10 characters).',links:'Your message contains too many links.',busy:'Sending…',fail:'Sending failed. Please email us directly: info@black-oak.be',
+ pasent:'Your request has already been sent. Thank you.',pareq:'Please enter your name, a valid email address, your profile and a short motivation (at least 10 characters), and accept the terms.',palinks:'Your motivation contains too many links.',pafail:'Sending failed. Please email us: info@black-oak.be',pasubj:'Private Access request (EN) — ',home_aria:'Blackoak Capital home'}}[LG]||{};
+const PG=(location.pathname.split('/').pop()||'index.html');
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
-const NAV=[['residential.html','Residential','residential'],['commercial.html','Commercial','commercial'],['over.html','Over Blackoak','over'],['heritage.html','Heritage','heritage'],['contact.html','Contact','contact']];
+const NAV=[['residential.html','Residential','residential'],['commercial.html','Commercial','commercial'],['over.html',I.over,'over'],['heritage.html','Heritage','heritage'],['contact.html','Contact','contact']];
 const logo='<span>Blackoak</span><span>Capital</span>';const sub={residential:'Residential',commercial:'Commercial'}[page];const hlogo=logo+(sub?`<small>${sub}</small>`:'');
-D.getElementById('hdr').innerHTML=`<header class="nav ${D.body.dataset.dark?'dark':''}"><a href="index.html" class="logo mag" aria-label="Blackoak Capital home">${hlogo}</a>
+D.getElementById('hdr').innerHTML=`<header class="nav ${D.body.dataset.dark?'dark':''}"><a href="index.html" class="logo mag" aria-label="${I.home_aria}">${hlogo}</a>
 <nav class="links">${NAV.map(n=>`<a class="ul ${n[2]==page?'on':''}" href="${n[0]}">${n[1]}</a>`).join('')}</nav>
-<a class="pa ul" href="contact.html">Private access →</a><div class="lang"><a class="on" href="#">NL</a><a href="#" title="Binnenkort">FR</a><a href="#" title="Binnenkort">EN</a></div>
+<a class="pa ul" href="contact.html">Private access →</a><div class="lang">${['nl','fr','en'].map(l=>`<a class="${l==LG?'on':''}" hreflang="${l}" lang="${l}" href="${RT}${l=='nl'?'':l+'/'}${PG}">${l.toUpperCase()}</a>`).join('')}</div>
 <button class="burger" aria-label="Menu"><i></i><i></i></button></header>
-<div class="overlay"><a class="big" href="index.html">Home</a>${NAV.map(n=>`<a class="big" href="${n[0]}">${n[1]}</a>`).join('')}<p class="lbl">Private access → &nbsp; · &nbsp; NL / FR / EN</p></div>
-<div class="curtain"></div><div class="cur"></div><div class="ring"><b>BEKIJK</b></div><div class="toast">Bedankt. We nemen snel contact met je op.</div>`;
-D.getElementById('ftr').outerHTML=`<footer><div class="top"><a href="index.html" class="logo caps">${logo}</a><div class="fl">${NAV.map(n=>`<a class="ul" href="${n[0]}">${n[1]}</a>`).join('')}<a class="ul" href="contact.html">Private access</a></div><p class="lbl meta">Real estate.<br>Long term value.</p><p class="lbl meta">Sparrendreef 120 bus 21<br>8300 Knokke-Heist<br><a class="ul" href="mailto:info@black-oak.be">info@black-oak.be</a></p></div><div class="big">Blackoak</div><div class="bot"><span>© 2026 Black Oak Capital BV · BTW BE 0730.923.011 · Est. 2019</span><span>Vastgoed. Voor generaties.</span></div></footer>`;
+<div class="overlay"><a class="big" href="index.html">${I.home}</a>${NAV.map(n=>`<a class="big" href="${n[0]}">${n[1]}</a>`).join('')}<p class="lbl">Private access → &nbsp; · &nbsp; ${['nl','fr','en'].map(l=>`<a href="${RT}${l=='nl'?'':l+'/'}${PG}" style="${l==LG?'opacity:1':'opacity:.6'}">${l.toUpperCase()}</a>`).join(' / ')}</p></div>
+<div class="curtain"></div><div class="cur"></div><div class="ring"><b>${I.view}</b></div><div class="toast">${I.thanks}</div>`;
+D.getElementById('ftr').outerHTML=`<footer><div class="top"><a href="index.html" class="logo caps">${logo}</a><div class="fl">${NAV.map(n=>`<a class="ul" href="${n[0]}">${n[1]}</a>`).join('')}<a class="ul" href="contact.html">Private access</a></div><p class="lbl meta">Real estate.<br>Long term value.</p><p class="lbl meta">Sparrendreef 120 bus 21<br>8300 Knokke-Heist<br><a class="ul" href="mailto:info@black-oak.be">info@black-oak.be</a></p></div><div class="big">Blackoak</div><div class="bot"><span>© 2026 Black Oak Capital BV · BTW BE 0730.923.011 · Est. 2019</span><span>${I.tag}</span></div></footer>`;
 const nav=D.querySelector('.nav');
 D.querySelector('.burger').onclick=()=>D.body.classList.toggle('menu-open');
 const onS=()=>nav.classList.toggle('scrolled',scrollY>60);addEventListener('scroll',onS,{passive:true});onS();
 // form
 const f=D.getElementById('cf');if(f){const T0=Date.now(),msg=D.getElementById('cf-msg');let sent=0;D.getElementById('ts').value=T0;f.onsubmit=async e=>{e.preventDefault();const say=x=>{msg.textContent=x};const d=new FormData(f);
  if(d.get('_honey')){f.reset();return}
- if(Date.now()-T0<4000){say('Even geduld: neem rustig de tijd om het formulier in te vullen.');return}
- if(sent>=2){say('Je bericht is al verstuurd. Dank je.');return}
+ if(Date.now()-T0<4000){say(I.wait);return}
+ if(sent>=2){say(I.sent);return}
  const n=(d.get('Naam')||'').trim(),em=(d.get('E-mail')||'').trim(),m=(d.get('Bericht')||'').trim();
- if(n.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)||m.length<10){say('Vul je naam, een geldig e-mailadres en een bericht (minstens 10 tekens) in.');return}
- if((m.match(/https?:\/\//g)||[]).length>2){say('Je bericht bevat te veel links.');return}
- d.delete('_ts');d.delete('_honey');const b=f.querySelector('button');b.disabled=true;say('Bezig met versturen…');
+ if(n.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)||m.length<10){say(I.req);return}
+ if((m.match(/https?:\/\//g)||[]).length>2){say(I.links);return}
+ d.delete('_ts');d.delete('_honey');const b=f.querySelector('button');b.disabled=true;say(I.busy);
  try{const r=await fetch('https://formsubmit.co/ajax/info@black-oak.be',{method:'POST',headers:{Accept:'application/json'},body:d});const j=await r.json().catch(()=>({}));
-  if(r.ok&&String(j.success)!=='false'){sent++;f.reset();say('');const t=D.querySelector('.toast');t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3800)}else say('Versturen lukte niet. Mail ons gerust rechtstreeks: info@black-oak.be')}
- catch(_){say('Versturen lukte niet. Mail ons gerust rechtstreeks: info@black-oak.be')}b.disabled=false}};
+  if(r.ok&&String(j.success)!=='false'){sent++;f.reset();say('');const t=D.querySelector('.toast');t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3800)}else say(I.fail)}
+ catch(_){say(I.fail)}b.disabled=false}};
 
 // ontwikkelingen carousel + private access
 D.querySelectorAll('.projc').forEach(sc=>{const tr=sc.querySelector('.pj-track'),cs=[...tr.querySelectorAll('.pc')],cnt=sc.querySelector('.pj-cnt b'),pv=sc.querySelector('.prev'),nx=sc.querySelector('.next');
@@ -45,17 +56,17 @@ D.querySelectorAll('.projc').forEach(sc=>{const tr=sc.querySelector('.pj-track')
  m.querySelector('.pa-x').onclick=close;m.querySelector('.pa-bg').onclick=close;addEventListener('keydown',e=>{if(e.key=='Escape'&&!m.hidden)close()});
  f.onsubmit=async e=>{e.preventDefault();const d=new FormData(f);const say=t=>msg.textContent=t;
   if((d.get('_honey')||'').length){say('');return}
-  if(Date.now()-T1<4000){say('Even geduld: neem rustig de tijd om het formulier in te vullen.');return}
-  if(sentPA>=2){say('Uw aanvraag is al verstuurd. Dank u.');return}
+  if(Date.now()-T1<4000){say(I.wait);return}
+  if(sentPA>=2){say(I.pasent);return}
   const n=(d.get('Naam')||'').trim(),em=(d.get('E-mail')||'').trim(),mo=(d.get('Motivatie')||'').trim();
-  if(n.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)||!d.get('Profiel')||mo.length<10||d.get('Voorwaarden')!=='Ja'){say('Vul uw naam, een geldig e-mailadres, uw profiel en een korte motivatie (minstens 10 tekens) in, en aanvaard de voorwaarden.');return}
-  if((mo.match(/https?:\/\//g)||[]).length>2){say('Uw motivatie bevat te veel links.');return}
-  d.delete('_honey');d.delete('Voorwaarden');d.set('Voorwaarden aanvaard','Ja — versie 1.0');d.set('Tijdstempel aanvaarding',new Date().toISOString());d.set('_subject','Private Access aanvraag — '+n);d.set('_replyto',em);const b=f.querySelector('button');b.disabled=true;say('Bezig met versturen…');
+  if(n.length<2||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)||!d.get('Profiel')||mo.length<10||d.get('Voorwaarden')!=='Ja'){say(I.pareq);return}
+  if((mo.match(/https?:\/\//g)||[]).length>2){say(I.palinks);return}
+  d.delete('_honey');d.delete('Voorwaarden');d.set('Voorwaarden aanvaard','Ja — versie 1.0');d.set('Taal',LG.toUpperCase());d.set('Tijdstempel aanvaarding',new Date().toISOString());d.set('_subject',I.pasubj+n);d.set('_replyto',em);const b=f.querySelector('button');b.disabled=true;say(I.busy);
   try{const r=await fetch('https://formsubmit.co/ajax/info@black-oak.be',{method:'POST',headers:{Accept:'application/json'},body:d});const j=await r.json().catch(()=>({}));
-   if(r.ok&&String(j.success)!=='false'){sentPA++;f.reset();f.style.display="none";m.querySelector(".pa-int").style.display="none";done.hidden=false}else say('Versturen lukte niet. Mail ons gerust: info@black-oak.be')}
-  catch(_){say('Versturen lukte niet. Mail ons gerust: info@black-oak.be')}b.disabled=false}});
+   if(r.ok&&String(j.success)!=='false'){sentPA++;f.reset();f.style.display="none";m.querySelector(".pa-int").style.display="none";done.hidden=false}else say(I.pafail)}
+  catch(_){say(I.pafail)}b.disabled=false}});
 // signature finish
-D.querySelectorAll('.sf').forEach(sf=>{const z=sf.querySelector('.sf-zoom'),nm=sf.querySelector('.sf-name'),lp=sf.querySelector('.sf-loupe');const set=(m,n)=>{z.style.backgroundImage=`url(img/new/stalen/${m}.jpg)`;nm.textContent=n;sf.querySelectorAll('[data-m]').forEach(e=>e.classList.toggle('on',e.dataset.m==m))};
+D.querySelectorAll('.sf').forEach(sf=>{const z=sf.querySelector('.sf-zoom'),nm=sf.querySelector('.sf-name'),lp=sf.querySelector('.sf-loupe');const set=(m,n)=>{z.style.backgroundImage=`url(${RT}img/new/stalen/${m}-1400.webp)`;nm.textContent=n;sf.querySelectorAll('[data-m]').forEach(e=>e.classList.toggle('on',e.dataset.m==m))};
  sf.querySelectorAll('[data-m]').forEach(e=>{e.addEventListener('mouseenter',()=>set(e.dataset.m,e.dataset.n));e.addEventListener('click',()=>set(e.dataset.m,e.dataset.n))});
  const mv=e=>{const R=lp.getBoundingClientRect(),p=e.touches?e.touches[0]:e;z.style.backgroundPosition=`${(p.clientX-R.left)/R.width*100}% ${(p.clientY-R.top)/R.height*100}%`};lp.addEventListener('mousemove',mv);lp.addEventListener('touchmove',mv,{passive:true});lp.addEventListener('click',()=>z.style.backgroundSize=z.style.backgroundSize=='320%'?'':'320%')});
 // archive: show only with photos
