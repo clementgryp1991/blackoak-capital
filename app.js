@@ -10,12 +10,21 @@ D.getElementById('hdr').innerHTML=`<header class="nav ${D.body.dataset.dark?'dar
 <button class="burger" aria-label="Menu"><i></i><i></i></button></header>
 <div class="overlay"><a class="big" href="index.html">Home</a>${NAV.map(n=>`<a class="big" href="${n[0]}">${n[1]}</a>`).join('')}<p class="lbl">Private access → &nbsp; · &nbsp; NL / FR / EN</p></div>
 <div class="curtain"></div><div class="cur"></div><div class="ring"><b>BEKIJK</b></div><div class="toast">Bedankt. We nemen snel contact met je op.</div>`;
-D.getElementById('ftr').outerHTML=`<footer><div class="top"><a href="index.html" class="logo caps">${logo}</a><div class="fl">${NAV.map(n=>`<a class="ul" href="${n[0]}">${n[1]}</a>`).join('')}<a class="ul" href="contact.html">Private access</a></div><p class="lbl meta">Real estate.<br>Long term value.</p><p class="lbl meta">België<br>Est. 2015</p></div><div class="big">Blackoak</div><div class="bot"><span>© 2026 Blackoak Capital · Est. 2015 · België</span><span>Vastgoed. Voor generaties.</span></div></footer>`;
+D.getElementById('ftr').outerHTML=`<footer><div class="top"><a href="index.html" class="logo caps">${logo}</a><div class="fl">${NAV.map(n=>`<a class="ul" href="${n[0]}">${n[1]}</a>`).join('')}<a class="ul" href="contact.html">Private access</a></div><p class="lbl meta">Real estate.<br>Long term value.</p><p class="lbl meta">België<br>Est. 2019</p></div><div class="big">Blackoak</div><div class="bot"><span>© 2026 Blackoak Capital · Est. 2019 · België</span><span>Vastgoed. Voor generaties.</span></div></footer>`;
 const nav=D.querySelector('.nav');
 D.querySelector('.burger').onclick=()=>D.body.classList.toggle('menu-open');
 const onS=()=>nav.classList.toggle('scrolled',scrollY>60);addEventListener('scroll',onS,{passive:true});onS();
 // form
 const f=D.querySelector('form');if(f)f.onsubmit=e=>{e.preventDefault();const t=D.querySelector('.toast');t.classList.add('on');f.reset();setTimeout(()=>t.classList.remove('on'),3800)};
+
+// signature finish
+D.querySelectorAll('.sf').forEach(sf=>{const z=sf.querySelector('.sf-zoom'),nm=sf.querySelector('.sf-name'),lp=sf.querySelector('.sf-loupe');const set=(m,n)=>{z.style.backgroundImage=`url(img/mat/${m}.jpg)`;nm.textContent=n;sf.querySelector('.sf-bg').style.backgroundImage=`url(img/mat/${m}.jpg)`;sf.querySelectorAll('[data-m]').forEach(e=>e.classList.toggle('on',e.dataset.m==m))};
+ sf.querySelectorAll('[data-m]').forEach(e=>{e.addEventListener('mouseenter',()=>set(e.dataset.m,e.dataset.n));e.addEventListener('click',()=>set(e.dataset.m,e.dataset.n))});
+ const mv=e=>{const R=lp.getBoundingClientRect(),p=e.touches?e.touches[0]:e;z.style.backgroundPosition=`${(p.clientX-R.left)/R.width*100}% ${(p.clientY-R.top)/R.height*100}%`};lp.addEventListener('mousemove',mv);lp.addEventListener('touchmove',mv,{passive:true});lp.addEventListener('click',()=>z.style.backgroundSize=z.style.backgroundSize=='320%'?'':'320%')});
+// lightbox
+const lb=D.querySelector('.lb');if(lb){const li=lb.querySelector('img'),lc=lb.querySelector('p');D.querySelectorAll('.g-it').forEach(g=>g.onclick=()=>{li.src=g.dataset.src;li.alt=g.dataset.cap;lc.textContent=g.dataset.cap;lb.classList.add('on')});const cl=()=>lb.classList.remove('on');lb.onclick=e=>{if(e.target!==li)cl()};addEventListener('keydown',e=>{if(e.key=='Escape')cl()})}
+// sepia -> colour
+const sio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('clr'),500);sio.unobserve(e.target)}}),{threshold:.45});D.querySelectorAll('[data-sepia]').forEach(i=>sio.observe(i));
 if(!window.gsap||RM){H.classList.remove('js');D.querySelector('.pre')?.remove();return}
 gsap.registerPlugin(ScrollTrigger);ScrollTrigger.clearScrollMemory&&ScrollTrigger.clearScrollMemory('manual');
 // lenis
@@ -35,8 +44,9 @@ const intro=()=>{
  D.querySelectorAll('.statement').forEach(s=>{s.innerHTML=s.textContent.trim().split(/\s+/).map(w=>`<span class="w">${w}</span>`).join(' ');gsap.to(s.querySelectorAll('.w'),{opacity:1,stagger:.1,ease:'none',scrollTrigger:{trigger:s,start:'top 80%',end:'bottom 45%',scrub:true}})});
  // counters
  D.querySelectorAll('[data-count]').forEach(el=>{const o={v:+el.dataset.from||0};gsap.to(o,{v:+el.dataset.count,duration:2,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 90%'},onUpdate:()=>el.textContent=Math.round(o.v)})});
+ D.querySelectorAll('.sf-bg').forEach(b=>gsap.fromTo(b,{yPercent:-6},{yPercent:6,ease:'none',scrollTrigger:{trigger:b.parentNode,start:'top bottom',end:'bottom top',scrub:true}}));
  // timeline line
- const tl=D.querySelector('.timeline .line i');if(tl)gsap.to(tl,{scaleY:1,ease:'none',scrollTrigger:{trigger:'.timeline',start:'top 70%',end:'bottom 60%',scrub:true}});
+ D.querySelectorAll('.timeline').forEach(T=>{const tl=T.querySelector('.line i');if(tl)gsap.to(tl,{scaleY:1,ease:'none',scrollTrigger:{trigger:T,start:'top 70%',end:'bottom 60%',scrub:true}})});
 };
 // preloader (once per session)
 const pre=D.querySelector('.pre');
