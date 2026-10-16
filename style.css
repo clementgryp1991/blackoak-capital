@@ -254,3 +254,4 @@ body[data-page=heritage]{--acc:var(--warm)}
 @media(max-width:900px){.sf-grid,.sf-teaser{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}.proj .proj-card{aspect-ratio:4/5}.sf-loupe{max-width:340px}.sf-tz i{min-height:130px}}
 
 .bw{filter:grayscale(1) contrast(.92) brightness(1.04)}.arch-sec[hidden]{display:none}.toen .ph-img{aspect-ratio:3/4;overflow:hidden}
+.toen .ph-img img{object-position:62% 50%}.tl-fig{margin:0 0 70px;max-width:980px}.tl-img{overflow:hidden;aspect-ratio:16/9;background:#222}.tl-img img{height:116%;margin-top:-8%}.tl-fig figcaption{margin-top:12px;color:var(--mute)}.arch-sec .gallery{grid-template-columns:repeat(3,1fr)}.arch-sec .g-it{background:#EDE8DF}.arch-sec .g-it img{aspect-ratio:4/3;object-fit:cover}@media(max-width:900px){.arch-sec .gallery{grid-template-columns:1fr}.tl-fig{margin-bottom:50px}}
