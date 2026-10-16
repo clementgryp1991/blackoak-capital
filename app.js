@@ -2,14 +2,14 @@
 const D=document,H=D.documentElement,page=D.body.dataset.page||'home';
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const NAV=[['residential.html','Residential','residential'],['commercial.html','Commercial','commercial'],['over.html','Over Blackoak','over'],['contact.html','Contact','contact']];
-const logo='<span>Blackoak</span><span>Capital</span>';
-D.getElementById('hdr').innerHTML=`<header class="nav ${D.body.dataset.dark?'dark':''}"><a href="index.html" class="logo mag" aria-label="Blackoak Capital home">${logo}</a>
+const logo='<span>Blackoak</span><span>Capital</span>';const sub={residential:'Residential',commercial:'Commercial'}[page];const hlogo=logo+(sub?`<small>${sub}</small>`:'');
+D.getElementById('hdr').innerHTML=`<header class="nav ${D.body.dataset.dark?'dark':''}"><a href="index.html" class="logo mag" aria-label="Blackoak Capital home">${hlogo}</a>
 <nav class="links">${NAV.map(n=>`<a class="ul ${n[2]==page?'on':''}" href="${n[0]}">${n[1]}</a>`).join('')}</nav>
 <a class="pa ul" href="contact.html">Private access →</a><div class="lang"><a class="on" href="#">NL</a><a href="#" title="Binnenkort">FR</a><a href="#" title="Binnenkort">EN</a></div>
 <button class="burger" aria-label="Menu"><i></i><i></i></button></header>
 <div class="overlay"><a class="big" href="index.html">Home</a>${NAV.map(n=>`<a class="big" href="${n[0]}">${n[1]}</a>`).join('')}<p class="lbl">Private access → &nbsp; · &nbsp; NL / FR / EN</p></div>
 <div class="curtain"></div><div class="cur"></div><div class="ring"><b>BEKIJK</b></div><div class="toast">Bedankt. We nemen snel contact met je op.</div>`;
-D.getElementById('ftr').outerHTML=`<footer><div class="top"><a href="index.html" class="logo">${logo}</a><div class="fl">${NAV.map(n=>`<a class="ul" href="${n[0]}">${n[1]}</a>`).join('')}<a class="ul" href="contact.html">Private access</a></div><p class="lbl meta">Real estate.<br>Long term value.</p><p class="lbl meta">België<br>Est. 2015</p></div><div class="big">Blackoak</div><div class="bot"><span>© 2026 Blackoak Capital · Est. 2015 · België</span><span>Vastgoed. Voor generaties.</span></div></footer>`;
+D.getElementById('ftr').outerHTML=`<footer><div class="top"><a href="index.html" class="logo caps">${logo}</a><div class="fl">${NAV.map(n=>`<a class="ul" href="${n[0]}">${n[1]}</a>`).join('')}<a class="ul" href="contact.html">Private access</a></div><p class="lbl meta">Real estate.<br>Long term value.</p><p class="lbl meta">België<br>Est. 2015</p></div><div class="big">Blackoak</div><div class="bot"><span>© 2026 Blackoak Capital · Est. 2015 · België</span><span>Vastgoed. Voor generaties.</span></div></footer>`;
 const nav=D.querySelector('.nav');
 D.querySelector('.burger').onclick=()=>D.body.classList.toggle('menu-open');
 const onS=()=>nav.classList.toggle('scrolled',scrollY>40);addEventListener('scroll',onS,{passive:true});onS();
