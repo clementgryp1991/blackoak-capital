@@ -307,3 +307,4 @@ body[data-page=heritage] h2{font-size:clamp(30px,3.2vw,46px)}
 body[data-page=heritage] .row{min-height:0}body[data-page=heritage] .row .media{max-height:60vh}
 body[data-page=heritage] .her-end{padding-block:clamp(70px,8vw,120px) 40px}
 @media(max-width:900px){.tn-g{grid-template-columns:1fr}.tn-m{justify-self:stretch;width:100%}.cmp{aspect-ratio:4/3;max-height:55vh}.st{min-height:0}.st-m .fr{aspect-ratio:4/3;max-height:50vh}.arch-sec .gallery{gap:8px}.arch-sec .g-it .lbl{display:none}body[data-page=heritage] .row .media{height:45vh}}
+.cmp-tag{top:16px;padding:5px 10px;background:rgba(20,26,36,.55);border-radius:2px;text-shadow:none;font-size:9.5px}.cmp-tag.l{left:16px}.cmp-tag.r{right:16px}
