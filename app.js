@@ -66,7 +66,7 @@ D.querySelectorAll('.projc').forEach(sc=>{const tr=sc.querySelector('.pj-track')
    if(r.ok&&String(j.success)!=='false'){sentPA++;f.reset();f.style.display="none";m.querySelector(".pa-int").style.display="none";done.hidden=false}else say(I.pafail)}
   catch(_){say(I.pafail)}b.disabled=false}});
 // signature finish
-D.querySelectorAll('.sf').forEach(sf=>{const z=sf.querySelector('.sf-zoom'),nm=sf.querySelector('.sf-name'),lp=sf.querySelector('.sf-loupe');const set=(m,n)=>{z.style.backgroundImage=`url(${RT}img/new/stalen/${m}-1400.webp)`;nm.textContent=n;sf.querySelectorAll('[data-m]').forEach(e=>e.classList.toggle('on',e.dataset.m==m))};
+D.querySelectorAll('.sf').forEach(sf=>{const z=sf.querySelector('.sf-zoom'),nm=sf.querySelector('.sf-name'),lp=sf.querySelector('.sf-loupe');const set=(m,n)=>{z.style.backgroundImage=`url(${RT}img/new/stalen/${m}-hd.webp)`;nm.textContent=n;sf.querySelectorAll('[data-m]').forEach(e=>e.classList.toggle('on',e.dataset.m==m))};
  sf.querySelectorAll('[data-m]').forEach(e=>{e.addEventListener('mouseenter',()=>set(e.dataset.m,e.dataset.n));e.addEventListener('click',()=>set(e.dataset.m,e.dataset.n))});
  const mv=e=>{const R=lp.getBoundingClientRect(),p=e.touches?e.touches[0]:e;z.style.backgroundPosition=`${(p.clientX-R.left)/R.width*100}% ${(p.clientY-R.top)/R.height*100}%`};lp.addEventListener('mousemove',mv);lp.addEventListener('touchmove',mv,{passive:true});lp.addEventListener('click',()=>z.style.backgroundSize=z.style.backgroundSize=='320%'?'':'320%')});
 // archive: show only with photos

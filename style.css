@@ -358,7 +358,7 @@ body[data-page=residential] .row{min-height:0}body[data-page=residential] .row .
 .duo .card img{object-position:50% 55%}
 .duo .card img.par{height:112%;margin-top:-6%}
 .duo .card:hover img{transform:scale(1.04)}
-.sf-zoom{background-size:105%}.sf-loupe:hover .sf-zoom{background-size:170%}
+.sf-zoom{background-size:105%}
 @media(min-width:901px){
 .tn-g{grid-template-columns:minmax(0,3fr) minmax(0,7fr)}
 .tn-m{width:min(100%,1300px,calc(85vh*1.5))}
@@ -375,3 +375,17 @@ body[data-page=residential] .row{min-height:0}body[data-page=residential] .row .
 .st[data-i="0"] .st-m{display:none}
 .arch-sec{display:none!important}
 }
+
+/* v11 */
+.sf-zoom{background-size:105%}.sf-loupe:hover .sf-zoom{background-size:200%}
+.duo .card{aspect-ratio:16/10}
+.duo .card img.com-rp{object-position:50% 50%}
+.duo .card img.par{height:100%;margin-top:0}
+body[data-page=commercial] .split{grid-template-columns:4fr 8fr;min-height:0;align-items:stretch}
+body[data-page=commercial] .split .media{aspect-ratio:1672/941;align-self:center}
+body[data-page=commercial] .split .media img{object-position:50% 50%}
+@media(max-width:900px){body[data-page=commercial] .split{grid-template-columns:1fr}body[data-page=commercial] .split .media{height:auto;aspect-ratio:16/9}}
+body[data-page=commercial] .split{background:var(--cnavy);align-items:center}
+body[data-page=commercial] .split .media{aspect-ratio:1672/941;align-self:center;min-height:0;margin-right:clamp(0px,2vw,32px);border-radius:3px}
+@media(max-width:900px){body[data-page=commercial] .split .media{margin:0;border-radius:0}}
+body[data-page=commercial] .nav.dark:not(.scrolled) .logo{color:#fff}
