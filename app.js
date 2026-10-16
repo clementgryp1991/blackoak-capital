@@ -21,6 +21,8 @@ const f=D.querySelector('form');if(f)f.onsubmit=e=>{e.preventDefault();const t=D
 D.querySelectorAll('.sf').forEach(sf=>{const z=sf.querySelector('.sf-zoom'),nm=sf.querySelector('.sf-name'),lp=sf.querySelector('.sf-loupe');const set=(m,n)=>{z.style.backgroundImage=`url(img/mat/${m}.jpg)`;nm.textContent=n;sf.querySelector('.sf-bg').style.backgroundImage=`url(img/mat/${m}.jpg)`;sf.querySelectorAll('[data-m]').forEach(e=>e.classList.toggle('on',e.dataset.m==m))};
  sf.querySelectorAll('[data-m]').forEach(e=>{e.addEventListener('mouseenter',()=>set(e.dataset.m,e.dataset.n));e.addEventListener('click',()=>set(e.dataset.m,e.dataset.n))});
  const mv=e=>{const R=lp.getBoundingClientRect(),p=e.touches?e.touches[0]:e;z.style.backgroundPosition=`${(p.clientX-R.left)/R.width*100}% ${(p.clientY-R.top)/R.height*100}%`};lp.addEventListener('mousemove',mv);lp.addEventListener('touchmove',mv,{passive:true});lp.addEventListener('click',()=>z.style.backgroundSize=z.style.backgroundSize=='320%'?'':'320%')});
+// archive: show only with photos
+D.querySelectorAll('.arch-sec').forEach(s=>{if(s.querySelector('.g-it'))s.hidden=false});
 // lightbox
 const lb=D.querySelector('.lb');if(lb){const li=lb.querySelector('img'),lc=lb.querySelector('p');D.querySelectorAll('.g-it').forEach(g=>g.onclick=()=>{li.src=g.dataset.src;li.alt=g.dataset.cap;lc.textContent=g.dataset.cap;lb.classList.add('on')});const cl=()=>lb.classList.remove('on');lb.onclick=e=>{if(e.target!==li)cl()};addEventListener('keydown',e=>{if(e.key=='Escape')cl()})}
 // sepia -> colour

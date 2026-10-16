@@ -252,3 +252,5 @@ body[data-page=heritage]{--acc:var(--warm)}
 .sf-teaser .txt{padding:clamp(50px,7vw,110px) var(--pad);display:flex;flex-direction:column;justify-content:center}
 .sf-tz{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px}.sf-tz i{background-size:cover;min-height:180px;transition:transform 1.2s}.sf-tz:hover i{transform:scale(.97)}
 @media(max-width:900px){.sf-grid,.sf-teaser{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}.proj .proj-card{aspect-ratio:4/5}.sf-loupe{max-width:340px}.sf-tz i{min-height:130px}}
+
+.bw{filter:grayscale(1) contrast(.92) brightness(1.04)}.arch-sec[hidden]{display:none}.toen .ph-img{aspect-ratio:3/4;overflow:hidden}
