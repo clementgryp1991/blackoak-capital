@@ -2,7 +2,7 @@
 if('scrollRestoration' in history)history.scrollRestoration='manual';if(!location.hash)window.scrollTo(0,0);
 const D=document,H=D.documentElement,page=D.body.dataset.page||'home';
 const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
-const NAV=[['residential.html','Residential','residential'],['commercial.html','Commercial','commercial'],['over.html','Over Blackoak','over'],['contact.html','Contact','contact']];
+const NAV=[['residential.html','Residential','residential'],['commercial.html','Commercial','commercial'],['over.html','Over Blackoak','over'],['heritage.html','Heritage','heritage'],['contact.html','Contact','contact']];
 const logo='<span>Blackoak</span><span>Capital</span>';const sub={residential:'Residential',commercial:'Commercial'}[page];const hlogo=logo+(sub?`<small>${sub}</small>`:'');
 D.getElementById('hdr').innerHTML=`<header class="nav ${D.body.dataset.dark?'dark':''}"><a href="index.html" class="logo mag" aria-label="Blackoak Capital home">${hlogo}</a>
 <nav class="links">${NAV.map(n=>`<a class="ul ${n[2]==page?'on':''}" href="${n[0]}">${n[1]}</a>`).join('')}</nav>
