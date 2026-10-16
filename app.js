@@ -33,6 +33,12 @@ D.querySelectorAll('.sf').forEach(sf=>{const z=sf.querySelector('.sf-zoom'),nm=s
  const mv=e=>{const R=lp.getBoundingClientRect(),p=e.touches?e.touches[0]:e;z.style.backgroundPosition=`${(p.clientX-R.left)/R.width*100}% ${(p.clientY-R.top)/R.height*100}%`};lp.addEventListener('mousemove',mv);lp.addEventListener('touchmove',mv,{passive:true});lp.addEventListener('click',()=>z.style.backgroundSize=z.style.backgroundSize=='320%'?'':'320%')});
 // archive: show only with photos
 D.querySelectorAll('.arch-sec').forEach(s=>{if(s.querySelector('.g-it'))s.hidden=false});
+// heritage compare + sticky timeline
+D.querySelectorAll('.cmp').forEach(c=>{const r=c.querySelector('.cmp-r');const u=()=>c.style.setProperty('--x',r.value+'%');r.addEventListener('input',u);u()});
+addEventListener('mousemove',()=>H.classList.add('moved'),{once:true});
+D.querySelectorAll('.htl').forEach(t=>{const imgs=t.querySelectorAll('.htl-st img'),cap=t.querySelector('.htl-cap'),st=t.querySelectorAll('.st');const act=i=>{st.forEach(s=>s.classList.toggle('on',s.dataset.i==i));imgs.forEach(m=>m.classList.toggle('on',m.dataset.i==i));const m=imgs[i];if(m)cap.textContent=m.dataset.cap};act(0);
+ const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)act(+e.target.dataset.i)}),{rootMargin:'-45% 0px -45% 0px'});st.forEach(s=>io.observe(s));
+ const ln=t.querySelector('.line i');if(ln&&window.gsap&&window.ScrollTrigger){gsap.registerPlugin(ScrollTrigger);gsap.to(ln,{scaleY:1,ease:'none',scrollTrigger:{trigger:t.querySelector('.htl-steps'),start:'top 60%',end:'bottom 50%',scrub:true}})}});
 // lightbox
 const lb=D.querySelector('.lb');if(lb){const li=lb.querySelector('img'),lc=lb.querySelector('p');D.querySelectorAll('.g-it').forEach(g=>g.onclick=()=>{li.src=g.dataset.src;li.alt=g.dataset.cap;lc.textContent=g.dataset.cap;lb.classList.add('on')});const cl=()=>lb.classList.remove('on');lb.onclick=e=>{if(e.target!==li)cl()};addEventListener('keydown',e=>{if(e.key=='Escape')cl()})}
 // sepia -> colour
