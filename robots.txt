@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /signature.html
 
 User-agent: GPTBot
 Allow: /
