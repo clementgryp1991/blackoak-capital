@@ -390,4 +390,4 @@ body[data-page=commercial] .split .media{aspect-ratio:1672/941;align-self:center
 @media(max-width:900px){body[data-page=commercial] .split .media{margin:0;border-radius:0}}
 body[data-page=commercial] .nav.dark:not(.scrolled) .logo{color:#fff}
 
-.row .media img.werf-img{width:100%;height:100%;object-fit:cover;object-position:50% 62%;position:absolute;inset:0}
+.row .media img.werf-img{width:100%;height:100%;object-fit:cover;object-position:50% 45%;position:absolute;inset:0}
